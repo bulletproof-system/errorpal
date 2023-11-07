@@ -1,24 +1,19 @@
-use std::io::{self, Write};
-use crossterm::{
-    ExecutableCommand, QueueableCommand,
-    terminal, cursor, style::{self, Stylize}
-};
 
-fn main() -> io::Result<()> {
-  let mut stdout = io::stdout();
+use errorpal::checker::{Tester, Info};
+use std::path::PathBuf;
 
-  stdout.execute(terminal::Clear(terminal::ClearType::All))?;
+const TEST_SOURCE_FOLDER: &str = r"D:\LTT\repository\Compiler\coderry\tests\ir_tests";
+const CWD: &str = r"D:\LTT\repository\Compiler\errorpal\cwd";
+const EXECUTABLE: &str = r"D:\LTT\repository\Compiler\coderry\build\src\coderry.exe";
 
-  for y in 0..40 {
-    for x in 0..150 {
-      if (y == 0 || y == 40 - 1) || (x == 0 || x == 150 - 1) {
-        // in this loop we are more efficient by not flushing the buffer.
-        stdout
-          .queue(cursor::MoveTo(x,y))?
-          .queue(style::PrintStyledContent( "█".magenta()))?;
-      }
+fn main() -> () {
+    let test_source_folder = PathBuf::from(TEST_SOURCE_FOLDER);
+    let cwd = PathBuf::from(CWD);
+    let executable = PathBuf::from(EXECUTABLE);
+    let tester = Tester::new(test_source_folder, cwd, executable).unwrap();
+    let (total, receiver) = tester.start();
+    let mut now = 0;
+    while let Ok(result) = receiver.recv() {
+        println!("{:?}\n", result);
     }
-  }
-  stdout.flush()?;
-  Ok(())
 }

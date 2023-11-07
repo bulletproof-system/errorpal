@@ -4,6 +4,10 @@ use thiserror::Error;
 pub enum Error {
 	#[error("io error")]
 	IoError(#[from] std::io::Error),
+	#[error("object error")]
+	ObjectError(String, String),
+	#[error("link error")]
+	LinkError(String, String),
 	#[error("runtime error")]
 	RuntimeError(String, String),
 	#[error("wrong path")]

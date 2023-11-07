@@ -1,0 +1,64 @@
+{
+	// 使用 IntelliSense 了解相关属性。 
+	// 悬停以查看现有属性的描述。
+	// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug unit tests in library 'errorpal'",
+			"cargo": {
+				"args": [
+					"test",
+					"--no-run",
+					"--lib",
+					"--package=errorpal"
+				],
+				"filter": {
+					"name": "errorpal",
+					"kind": "lib"
+				}
+			},
+			"args": [],
+			"cwd": "${workspaceFolder}"
+		},
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug executable 'errorpal'",
+			"cargo": {
+				"args": [
+					"build",
+					"--bin=errorpal",
+					"--package=errorpal"
+				],
+				"filter": {
+					"name": "errorpal",
+					"kind": "bin"
+				}
+			},
+			"args": [],
+			"cwd": "${workspaceFolder}"
+		},
+		{
+			"type": "lldb",
+			"request": "launch",
+			"name": "Debug unit tests in executable 'errorpal'",
+			"cargo": {
+				"args": [
+					"test",
+					"--no-run",
+					"--bin=errorpal",
+					"--package=errorpal"
+				],
+				"filter": {
+					"name": "errorpal",
+					"kind": "bin"
+				}
+			},
+			"args": [],
+			"cwd": "${workspaceFolder}"
+		}
+	]
+}
